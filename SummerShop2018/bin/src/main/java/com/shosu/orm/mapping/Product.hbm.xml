@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 17, 2018 2:08:49 AM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.shosu.orm.Product" table="PRODUCT">
+        <id name="productId" type="java.lang.String">
+            <column name="PRODUCTID" />
+            <generator class="assigned" />
+        </id>
+        <property name="productName" type="java.lang.String">
+            <column name="PRODUCTNAME" />
+        </property>
+        <property name="productPrice" type="java.lang.Double">
+            <column name="PRODUCTPRICE" />
+        </property>
+        <property name="createdDate" type="timestamp">
+            <column name="CREATEDDATE" />
+        </property>
+        <property name="createdBy" type="java.lang.String">
+            <column name="CREATEDBY" />
+        </property>
+        <property name="lastModifiedDate" type="timestamp">
+            <column name="LASTMODIFIEDDATE" />
+        </property>
+        <property name="lastModifiedBy" type="java.lang.String">
+            <column name="LASTMODIFIEDBY" />
+        </property>
+    </class>
+</hibernate-mapping>

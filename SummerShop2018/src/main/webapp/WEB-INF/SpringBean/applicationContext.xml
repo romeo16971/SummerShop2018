@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:social="http://www.springframework.org/schema/social"
+	xmlns:facebook="http://www.springframework.org/schema/social/facebook"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+    	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    	http://www.springframework.org/schema/jdbc
+    	http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+     	http://www.springframework.org/schema/social http://www.springframework.org/schema/social/spring-social.xsd
+    	http://www.springframework.org/schema/social/facebook http://www.springframework.org/schema/social/spring-social-facebook.xsd">
+	<!-- Database Configuration -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/properties/database.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>com.shosu.dto</value>
+				<value>com.shosu.orm</value>
+			</list>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop><!-- create -->
+				<!-- Enable L2 cache. -->
+ 				<prop key="cache.use_second_level_cache">true</prop>
+
+				<!-- Generate L2 cache statistics. -->
+				<prop key="generate_statistics">true</prop>
+
+				<!-- Specify Ignite as L2 cache provider. -->
+				<prop key="cache.region.factory_class">org.apache.ignite.cache.hibernate.HibernateRegionFactory</prop>
+
+				<!-- Specify the name of the grid, that will be used for second level 
+					caching. -->
+				<prop key="org.apache.ignite.hibernate.ignite_instance_name">hibernate-grid</prop>
+
+				<!-- Set default L2 cache access type. -->
+				<prop key="org.apache.ignite.hibernate.default_access_type">READ_ONLY</prop>
+
+				<!-- Specify the entity classes for mapping.
+
+				Per-class L2 cache settings. -->
+				<!-- <class-cache class="com.shosu.orm.CurrentStatus"
+					usage="read-only" /> -->
+				<!-- <class-cache class="com.mycompany.MyEntity2"
+					usage="read-only" /> -->
+				<!-- <collection-cache
+					collection="com.mycompany.MyEntity1.children" usage="read-only" /> -->
+
+			</props>
+		</property>
+
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:com/shosu/orm/mapping/ShosuUser.hbm.xml</value>
+				<value>classpath:com/shosu/orm/mapping/Product.hbm.xml</value>
+				<value>classpath:com/shosu/orm/mapping/Currentstatus.hbm.xml</value>
+				<!-- <value>classpath:com/shosu/dto/EmployeeDTO</value> -->
+			</list>
+		</property>
+	</bean>
+	<!-- Transaction configuration -->
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<context:component-scan base-package="com.shosu.config" />
+	<context:component-scan base-package="com.shosu.orm" />
+
+</beans>

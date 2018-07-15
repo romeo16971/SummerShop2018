@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:metadata>
+		<f:event listener="#{loginAdmin.init()}" type="preRenderView"></f:event>
+	</f:metadata>
+</h:head>
+
+<h:body>
+	<h:form id="form1">
+		<p:growl id="growl" autoUpdate="true"></p:growl>
+		<p:outputLabel value="#{loginAdmin.persion.name}"></p:outputLabel>
+		<p:inputText id="inputText1" value="#{loginAdmin.userName}"></p:inputText>
+		<p:inputText value="#{loginAdmin.password}"></p:inputText>
+		<p:commandButton disabled="#{loginAdmin.fuck}"
+			oncomplete="PF('dialog').show()">
+			
+		</p:commandButton>
+	</h:form>
+
+
+
+	<p:dialog widgetVar="dialog" id="dialog">
+		<h:form id="form2" prependId="false">
+			<p:inputText id="inputText2" value="#{loginAdmin.userName}"></p:inputText>
+			<p:commandButton disabled="#{loginAdmin.fuck}"
+				actionListener="#{loginAdmin.TestShit()}">
+				<p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+				</p:commandButton>
+		</h:form>
+	</p:dialog>
+
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		<p:commandButton value="Yes" type="button"
+			styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	</p:confirmDialog>
+</h:body>
+</html>

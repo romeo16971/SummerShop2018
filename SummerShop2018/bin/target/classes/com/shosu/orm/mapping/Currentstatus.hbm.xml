@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 28, 2015 9:41:06 PM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+	<class name="com.shosu.orm.CurrentStatus" table="currentstatus">
+		<id name="driverId" type="string">
+			<column name="DriverID" length="50" />
+			<generator class="assigned"/>
+        </id>
+<!-- 		 <timestamp name="lastModifiedDate" column="LastModifiedDate"/> -->
+<!-- 		  source="db" -->
+		<property name="lastModifiedDate" type ="timestamp">
+			<column name="LastModifiedDate" length="0" not-null="true"
+				default="current_timestamp" sql-type="TIMESTAMP" />
+		</property>
+		
+		<property name="currentLatitude" type="double">
+			<column name="CurrentLatitude" precision="22" scale="0"
+				not-null="true" />
+		</property>
+		<property name="currentLongtitude" type="double">
+			<column name="CurrentLongtitude" precision="22" scale="0"
+				not-null="true" />
+		</property>
+		<property name="currentStatus" type="string">
+			<column name="CurrentStatus" length="2" not-null="true" />
+		</property>
+		<!-- <property name="deviceType" type="string"> <column name="DeviceType" 
+			length="2" /> </property> <property name="deviceId" type="string"> <column 
+			name="DeviceID" length="50" /> </property> -->
+		<!-- <property name="currentLocation" type="string"> <column name="CurrentLocation" 
+			length="200" /> </property> -->
+		<property name="level" type="string">
+			<column name="Level" length="4" />
+		</property>
+		<property name="level2" type="string">
+            <column name="Level2" length="4" />
+        </property>
+        <property name="level3" type="string">
+            <column name="Level3" length="4" />
+        </property>
+		<property name="selfControlled" type="java.lang.Boolean">
+			<column name="SelfControlled" default="0" />
+		</property>
+		<property name="autoOnline" type="boolean">
+			<column name="AutoOnline" not-null="true" default="false"/>
+		</property>
+		<property name="companyId" type="java.lang.Integer" insert="true"
+			update="true">
+			<column name="CompanyID" not-null="true" />
+		</property>
+		<property name="companyGroupId" type="java.lang.Integer">
+			<column name="CompanyGroupID" />
+		</property>
+		<property name="languageCode" type="string">
+			<column name="LanguageCode" length="4" />
+		</property>
+		<property name="newFeild" type="boolean">
+			<column name="newFeild" not-null="true" default="false"/>
+		</property>
+	</class>
+</hibernate-mapping>
